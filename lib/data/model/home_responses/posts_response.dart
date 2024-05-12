@@ -8,12 +8,15 @@ class PostsResponse {
       this.status, 
       this.results, 
       this.page, 
-      this.posts,});
+      this.posts,
+    this.message
+  });
 
   PostsResponse.fromJson(dynamic json) {
     status = json['status'];
     results = json['results'];
     page = json['page'];
+    message = json['message'];
     if (json['posts'] != null) {
       posts = [];
       json['posts'].forEach((v) {
@@ -25,12 +28,14 @@ class PostsResponse {
   int? results;
   int? page;
   List<Posts>? posts;
+  String? message;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['status'] = status;
     map['results'] = results;
     map['page'] = page;
+    map['message'] = message;
     if (posts != null) {
       map['posts'] = posts?.map((v) => v.toJson()).toList();
     }
@@ -118,21 +123,18 @@ class User {
       this.photo, 
       this.id, 
       this.name, 
-      this.phone, 
-      this.id,});
+      this.phone,});
 
   User.fromJson(dynamic json) {
     photo = json['photo'] != null ? Photo.fromJson(json['photo']) : null;
     id = json['_id'];
     name = json['name'];
     phone = json['phone'];
-    id = json['id'];
   }
   Photo? photo;
   String? id;
   String? name;
   String? phone;
-  String? id;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -142,7 +144,6 @@ class User {
     map['_id'] = id;
     map['name'] = name;
     map['phone'] = phone;
-    map['id'] = id;
     return map;
   }
 

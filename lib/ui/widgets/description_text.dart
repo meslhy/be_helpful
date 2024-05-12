@@ -15,6 +15,7 @@ class CustomDescriptionText extends StatelessWidget {
         fontWeight: AppTheme.lightTheme.textTheme.labelLarge?.fontWeight ?? FontWeight.w600,
         color: AppColors.grey
       ),
+      textAlign: TextAlign.right,
     );
   }
 }

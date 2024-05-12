@@ -1,4 +1,5 @@
 import 'package:be_helpful/domain/di/di.dart';
+import 'package:be_helpful/ui/screens/auth/forget_pass/send_otp/send_otp_screen.dart';
 import 'package:be_helpful/ui/screens/auth/login/login_view_model.dart';
 import 'package:be_helpful/ui/screens/auth/signup/signup_screen.dart';
 import 'package:be_helpful/ui/screens/auth/widgets/tff_widget.dart';
@@ -123,7 +124,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             const SizedBox(height: 10,),
                              TextButton(
-                               onPressed: (){},
+                               onPressed: (){
+                                 Navigator.pushReplacementNamed(context, SendOtpScreen.routeName);
+                               },
                                child: const Text(
                                 "هل نسيت كلمة السر؟"
                                     ,

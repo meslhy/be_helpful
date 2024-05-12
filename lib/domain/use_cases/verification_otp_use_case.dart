@@ -4,18 +4,12 @@ import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class LoginUseCase {
+class VerificationOTPUseCase{
 
-  AuthRepo login;
+  AuthRepo repo;
+  VerificationOTPUseCase(this.repo);
 
-  LoginUseCase(this.login);
-
-  Future<Either<Failuer , bool>> execute(String email , String password ){
-    return login.login(email,password);
-
+  Future<Either<Failuer , bool>> execute(String otp){
+    return repo.verificationOTP(otp);
   }
-
-
-
-
 }

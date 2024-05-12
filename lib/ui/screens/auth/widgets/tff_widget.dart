@@ -11,6 +11,7 @@ class CustomTextFormField extends StatelessWidget {
   String? Function(String?)? validator;
   TextInputType type ;
   IconButton? icon ;
+  bool isRight ;
 
 
   CustomTextFormField({
@@ -22,6 +23,7 @@ class CustomTextFormField extends StatelessWidget {
     required this.type ,
      this.icon ,
      this.isVisible = false,
+    this.isRight = false
 
   });
   @override
@@ -47,6 +49,8 @@ class CustomTextFormField extends StatelessWidget {
         suffixIcon: isPassword? icon: null,
       ),
       obscureText:isVisible,
+      textAlign: isRight?TextAlign.right:TextAlign.left,
+      validator: validator,
     );
   }
 }
