@@ -1,5 +1,6 @@
 import 'package:be_helpful/domain/di/di.dart';
 import 'package:be_helpful/ui/screens/auth/forget_pass/otp/otp_view_model.dart';
+import 'package:be_helpful/ui/screens/auth/forget_pass/reset_pass/reset_pass_screen.dart';
 import 'package:be_helpful/ui/screens/auth/forget_pass/send_otp/send_otp_screen.dart';
 import 'package:be_helpful/ui/screens/home/home_screen.dart';
 import 'package:be_helpful/ui/utils/app_colors.dart';
@@ -34,7 +35,7 @@ class _VerificationOTPScreenState extends State<VerificationOTPScreen> {
             showLoading(context);
           }else if (state is BaseRequestSuccessState){
             Navigator.pop(context);
-            Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+            Navigator.pushReplacementNamed(context, ResetPassScreen.routeName);
           }else if (state is BaseRequestErrorState){
             Navigator.pop(context);
             showErrorDialog(context, state.message);

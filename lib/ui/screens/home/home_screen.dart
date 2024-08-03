@@ -1,6 +1,8 @@
 import 'package:be_helpful/domain/di/di.dart';
 import 'package:be_helpful/ui/screens/home/home_view_model.dart';
 import 'package:be_helpful/ui/screens/home/widgets/list_of%20posts.dart';
+import 'package:be_helpful/ui/screens/post/add_post_screen.dart';
+import 'package:be_helpful/ui/screens/profile/profile_screen.dart';
 import 'package:be_helpful/ui/utils/app_colors.dart';
 import 'package:be_helpful/ui/utils/base_request_states.dart';
 import 'package:be_helpful/ui/utils/constants.dart';
@@ -41,14 +43,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconButton(
-                      onPressed: (){},
+                    onPressed: (){
+                      Navigator.pushNamed(context, AddPostScreen.routeName);
+                    },
+                    icon: Icon(Icons.category),
+                  ),
+                  IconButton(
+                      onPressed: (){
+                        Navigator.pushNamed(context, AddPostScreen.routeName);
+                      },
                       icon: Icon(Icons.add),
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * .8,
                     child: TextFormField(
                       controller: TextEditingController(),
-                      style: const TextStyle(
+                      style:  TextStyle(
                           color: AppColors.black,
                           fontWeight: FontWeight.bold
                       ),
@@ -57,7 +67,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         fillColor:Colors.white.withOpacity(.91),
                         hintText: "بتدور علي ايه؟",
                         suffixIcon: Icon(Icons.search),
-                        prefixIcon: Icon(Icons.person),
+                        prefixIcon: IconButton(onPressed: (){
+                          Navigator.pushNamed(context, ProfileScreen.routeName);
+                        }, icon: Icon(Icons.person)),
                         hintStyle:  const TextStyle(
                           color: AppColors.grey ,
                           fontSize: 16,

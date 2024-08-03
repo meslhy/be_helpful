@@ -169,8 +169,53 @@ print(body);
             serverResponse.statusCode < 300) {
           return const Right(true);
         } else {
-
+          print(serverResponse.body);
           return left(Failuer(Constants.defaultErrorMessage));
+
+        }
+      }catch(e,ee){
+        print("erorr is $e ,,,,$ee");
+        return left(Failuer(e.toString()));
+      }
+    } else {
+      return Left(Failuer(Constants.internetErrorMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failuer, bool>> resetPass(String email,String pass, String confirmPass) async{
+    final body = jsonEncode({
+      "email": email,
+      "password": pass,
+      "passwordConfirm": confirmPass,
+    });
+
+    print(email);
+    print(pass);
+    print(confirmPass);
+    if(await connectivity.isInternetConnective) {
+      try{
+        Uri url = Uri.https(EndPoints.baseUrl,EndPoints.resetPass);
+
+        Response serverResponse = await patch(
+            url,
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: body
+        );
+
+        AuthResponse authResponse = AuthResponse.fromJson(
+            jsonDecode(serverResponse.body));
+
+        if (serverResponse.statusCode >= 200 &&
+            serverResponse.statusCode < 300) {
+          sharedPrefsUtils.saveUser(authResponse);
+          sharedPrefsUtils.saveToken(authResponse.token!);
+          return const Right(true);
+        } else {
+
+          return left(Failuer(authResponse.message??Constants.defaultErrorMessage));
 
         }
       }catch(e,ee){

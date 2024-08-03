@@ -27,6 +27,7 @@ class CustomButton extends StatelessWidget {
           style: TextStyle(
             fontSize: AppTheme.lightTheme.textTheme.labelLarge?.fontSize ?? 20,
             fontWeight: AppTheme.lightTheme.textTheme.labelLarge?.fontWeight ?? FontWeight.w500,
+            color: AppColors.white
           ),
         ),
       ),

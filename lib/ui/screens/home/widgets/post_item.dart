@@ -64,9 +64,12 @@ class PostItem extends StatelessWidget {
                             Icon(Icons.watch_later_outlined , color: AppColors.grey,)
                           ],
                         ),
-                        Text(
-                          postDM.location??"",
-                          style: AppTheme.lightTheme.textTheme.labelMedium,
+                        Expanded(
+                          child: Text(
+                            postDM.location??"",
+                            style: AppTheme.lightTheme.textTheme.labelMedium,
+                            maxLines: 1,
+                          ),
                         ),
                          Row(
                           children: [
@@ -112,7 +115,7 @@ class PostItem extends StatelessWidget {
                 color: AppColors.babyBlue,
                 text: "WatsApp",
                 onPressed: (){
-                  goToChatWhatsApp("");
+                  goToChatWhatsApp(postDM.user?.phone??"01146197496");
                 },
               ),
             ),
@@ -123,7 +126,7 @@ class PostItem extends StatelessWidget {
   }
 
   void goToChatWhatsApp(String phoneNumber) {
-    final Uri whatsApp = Uri.parse("https://wa.me/201027734183");
+    final Uri whatsApp = Uri.parse("https://wa.me/2$phoneNumber");
    launchUrl(whatsApp);
 
   }
@@ -131,6 +134,6 @@ class PostItem extends StatelessWidget {
 
 lineSpace(BuildContext context)=>Container(
   width:MediaQuery.of(context).size.width *.8,
-  height: 1,
+  height: 2,
   color: Colors.grey[300],
 );
