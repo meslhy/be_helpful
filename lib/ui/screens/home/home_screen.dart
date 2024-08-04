@@ -11,6 +11,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../data/model/home_responses/posts_response.dart';
+
 class HomeScreen extends StatefulWidget {
   static const String routeName = "HomeScreen";
   const HomeScreen({super.key});
@@ -54,8 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       icon: Icon(Icons.add),
                   ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * .8,
+                  Expanded(
                     child: TextFormField(
                       controller: TextEditingController(),
                       style:  TextStyle(
@@ -82,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                       ),
                       textAlign: TextAlign.right,
-
+                    
                     ),
                   ),
                 ],
@@ -92,8 +93,9 @@ class _HomeScreenState extends State<HomeScreen> {
               bloc: viewModel.getAllPostsUseCase,
               builder: (context, state) {
                 if(state is BaseRequestSuccessState){
+                  PostsResponse posts = state.data;
                   return Expanded(
-                      child: buildPostsListView(state.data)
+                      child: buildPostsListView(posts.posts!)
                   );
                 }else if(state is BaseRequestErrorState){
                   return const Center(

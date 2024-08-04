@@ -6,5 +6,7 @@ abstract class EndPoints {
   static String sendOTP = "/api/v1/users/forgotPassword";
   static String verificationOTP = "/api/v1/users/verifyResetCode";
   static String resetPass = "/api/v1/users/resetPassword";
+  static String getAllCategories = "/api/v1/posts/getAllCategories";
+  static String profile = "/api/v1/users/me";
 
 }

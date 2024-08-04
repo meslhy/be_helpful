@@ -13,16 +13,7 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  File? _image;
 
-  Future<void> _pickImage() async {
-    // final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-    // if (pickedFile != null) {
-    //   setState(() {
-    //     _image = File(pickedFile.path);
-    //   });
-    // }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,27 +43,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
               ),
               const SizedBox(height: 20.0),
-              Stack(
-                children: [
-                  CircleAvatar(
-                    radius: 50.0,
-                    backgroundImage: _image == null
-                        ? const NetworkImage(
-                      'https://via.placeholder.com/150',
-                    )
-                        : FileImage(_image!) as ImageProvider,
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: IconButton(
-                      icon: const Icon(Icons.camera_alt, color: Colors.white),
-                      onPressed: _pickImage,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20.0),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.0),
                 child: Column(
@@ -98,24 +68,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     Row(
                       children: [
                         Text(
-                          'البريد الإلكتروني',
-                          style: TextStyle(
-                            fontSize:
-                            18.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 15.0,
-                        ),
-                        SizedBox(
-                            width: 200.0,
-                            child: CustomTextField(istrue: false,)),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
                           'رقم الهاتف',
                           style: TextStyle(
                             fontSize:
@@ -129,40 +81,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         SizedBox(
                             width: 200.0,
                             child: CustomTextField(istrue: false,)),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          'كلمة السر ',
-                          style: TextStyle(
-                            fontSize:
-                            18.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 60.0,
-                        ),
-                        SizedBox(
-                            width: 200.0,
-                            child: CustomTextField(label: 'الحالية',istrue: true,)),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(right: 85.0),
-                          child: SizedBox(
-                              width: 200,
-                              child:
-                              CustomTextField(label: 'الجديدة',istrue: true,)),
-                        ),
-                        SizedBox(
-                            width: 200,
-                            child:
-                            CustomTextField(label: 'تأكيد',istrue: true,)),
                       ],
                     ),
                   ],

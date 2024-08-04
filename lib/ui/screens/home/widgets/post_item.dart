@@ -88,7 +88,7 @@ class PostItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        postDM.user!.name ?? "",
+                        postDM.user?.name ?? "",
                         style:const TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 16,
@@ -101,7 +101,7 @@ class PostItem extends StatelessWidget {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(80),
                             image: DecorationImage(
-                                image: NetworkImage(postDM.user!.photo!.url!), fit: BoxFit.cover)),
+                                image: NetworkImage(postDM.user?.photo?.url??""), fit: BoxFit.cover)),
                         margin: const EdgeInsets.only(left: 20 ,bottom: 10,top: 10),
                       ),
                     ],
@@ -115,7 +115,7 @@ class PostItem extends StatelessWidget {
                 color: AppColors.babyBlue,
                 text: "WatsApp",
                 onPressed: (){
-                  goToChatWhatsApp(postDM.user?.phone??"01146197496");
+                  goToChatWhatsApp(postDM.user?.phone?? "01146197496");
                 },
               ),
             ),

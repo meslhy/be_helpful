@@ -1,6 +1,15 @@
+import 'package:be_helpful/data/model/profile_response/profile_response.dart';
+import 'package:be_helpful/domain/di/di.dart';
+import 'package:be_helpful/ui/screens/profile/profile_view_model.dart';
+import 'package:be_helpful/ui/utils/app_assets.dart';
+import 'package:be_helpful/ui/utils/app_colors.dart';
+import 'package:be_helpful/ui/utils/base_request_states.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
+import '../../../data/model/home_responses/posts_response.dart';
+import '../home/widgets/list_of posts.dart';
 import 'edit_profile/edit_profile_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -12,7 +21,16 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
+
 class _ProfileScreenState extends State<ProfileScreen> {
+
+  ProfileViewModel viewModel = getIt();
+
+  @override
+  void initState() {
+    viewModel.getProfile();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,230 +47,116 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Directionality(
-          textDirection: TextDirection.rtl,
-          child: Column(
-            children: [
-              const SizedBox(height: 20.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: Directionality(
+        textDirection: TextDirection.rtl,
+        child: BlocBuilder(
+          bloc:viewModel.getProfileUseCase,
+          builder: (context, state) {
+
+            print(state);
+            if(state is BaseRequestSuccessState){
+              ProfileDataDetails profileDataDetails = state.data.data.data;
+              return Column(
                 children: [
-                  const CircleAvatar(
-                    radius: 70.0,
-                    backgroundImage: NetworkImage(
-                      'https://via.placeholder.com/100',
-                    ), // Replace with your image URL
-                  ),
-                  const SizedBox(height: 10.0),
-                  Column(
+                  const SizedBox(height: 20.0),
+                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      const Text(
-                        'Mona Ali',
-                        style: TextStyle(
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      if(profileDataDetails.photo!.url != "default.jpg" )CircleAvatar(
+                        radius: 70.0,
+                        backgroundImage: NetworkImage(
+                          profileDataDetails.photo?.url?? AppAssets.unknownOnline,
+                        ), // Replace with your image URL
+                      ),
+                      if(profileDataDetails.photo!.url == "default.jpg" )CircleAvatar(
+                        radius: 70.0,
+                        backgroundImage: AssetImage(AppAssets.unknown)
                       ),
                       const SizedBox(height: 10.0),
-                      // ElevatedButton.icon(
-                      //   onPressed: () {
-                      //     Navigator.push(
-                      //       context,
-                      //       MaterialPageRoute(
-                      //         builder: (context) => const AddPostScreen(),
-                      //       ),
-                      //     );
-                      //   },
-                      //   icon: const Icon(Icons.add),
-                      //   label: const Text(
-                      //     'إضافة منشور',
-                      //     style: TextStyle(
-                      //       fontSize: 18.0,
-                      //       fontWeight: FontWeight.bold,
-                      //     ),
-                      //   ),
-                      //   style: ElevatedButton.styleFrom(
-                      //     shape: RoundedRectangleBorder(
-                      //       borderRadius: BorderRadius.circular(12.0),
-                      //     ),
-                      //     minimumSize: const Size(200, 50),
-                      //   ),
-                      // ),
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10.0),
-              OutlinedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const EditProfileScreen(),
-                    ),
-                  );
-                },
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: Colors.black,
-                  side: const BorderSide(color: Colors.black),
-                  fixedSize: const Size(200, 30),
-                ),
-                child: const Text(
-                  'تعديل الملف الشخصي',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18.0,
-                  ),
-                ),
-              ),
-              const Divider(
-                height: 40.0,
-                thickness: 10.0,
-              ),
-              Container(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Image.network(
-                      'https://via.placeholder.com/400',
-                      // Replace with your image URL
-                      height: 200,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
-                    const SizedBox(height: 10.0),
-                    const Text(
-                      'دراجة ابني معدشي بيستخدمها لو حد محتاجها',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      'الوصف',
-                      style: TextStyle(
-                          fontSize: 18.0,
-                          color: Colors.grey[800],
-                          fontWeight: FontWeight.bold),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                      child: Column(
+                      Column(
                         children: [
-                          Row(
-                            children: [
-                              Text(
-                                'الماركة: ',
-                                style: TextStyle(
-                                    fontSize: 14.0,
-                                    color: Colors.grey[800],
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                'PHILIPS',
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  color: Colors.grey[800],
-                                ),
-                              ),
-                            ],
+                          Text(
+                            profileDataDetails.name??"",
+                            style: const TextStyle(
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                          Row(
-                            children: [
-                              Text(
-                                'المادة: ',
-                                style: TextStyle(
-                                    fontSize: 14.0,
-                                    color: Colors.grey[800],
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                'المونيوم',
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  color: Colors.grey[800],
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                'اللون: ',
-                                style: TextStyle(
-                                    fontSize: 14.0,
-                                    color: Colors.grey[800],
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                'اسود',
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  color: Colors.grey[800],
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                'اخري: ',
-                                style: TextStyle(
-                                    fontSize: 14.0,
-                                    color: Colors.grey[800],
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                'بها عطل في الفرامل الأماميه',
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  color: Colors.grey[800],
-                                ),
-                              ),
-                            ],
-                          ),
+                          const SizedBox(height: 10.0),
+                          // ElevatedButton.icon(
+                          //   onPressed: () {
+                          //     Navigator.push(
+                          //       context,
+                          //       MaterialPageRoute(
+                          //         builder: (context) => const AddPostScreen(),
+                          //       ),
+                          //     );
+                          //   },
+                          //   icon: const Icon(Icons.add),
+                          //   label: const Text(
+                          //     'إضافة منشور',
+                          //     style: TextStyle(
+                          //       fontSize: 18.0,
+                          //       fontWeight: FontWeight.bold,
+                          //     ),
+                          //   ),
+                          //   style: ElevatedButton.styleFrom(
+                          //     shape: RoundedRectangleBorder(
+                          //       borderRadius: BorderRadius.circular(12.0),
+                          //     ),
+                          //     minimumSize: const Size(200, 50),
+                          //   ),
+                          // ),
                         ],
                       ),
+                    ],
+                  ),
+                  const SizedBox(height: 10.0),
+                  OutlinedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const EditProfileScreen(),
+                        ),
+                      );
+                    },
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      side: const BorderSide(color: Colors.black),
+                      fixedSize: const Size(200, 30),
                     ),
-                    const SizedBox(height: 30.0),
-                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(MdiIcons.shoeSneaker, color: Colors.grey),
-                            const SizedBox(width: 5),
-                            const Text(
-                              'شنط وأحذية',
-                              style: TextStyle(
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        const Row(
-                          children: [
-                            Icon(Icons.watch_later_outlined,
-                                color: Colors.grey),
-                            SizedBox(width: 5),
-                            Text(
-                              'منذ شهرين',
-                              style: TextStyle(
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
+                    child: const Text(
+                      'تعديل الملف الشخصي',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18.0,
+                      ),
+                    ),
+                  ),
+                  const Divider(
+                    height: 40.0,
+                    thickness: 10.0,
+                  ),
+                  if(profileDataDetails.posts != null) Expanded(
+                      child: buildPostsListView(profileDataDetails.posts!)
+                  ),
+                ],
+              );
+            }
+            else if(state is BaseRequestErrorState){
+              return  Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(state.message)
+                ],
+              );
+            }else{
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
         ),
       ),
     );
