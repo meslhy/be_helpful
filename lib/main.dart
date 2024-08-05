@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
        ProfileScreen.routeName:(context) => const ProfileScreen(),
        EditProfileScreen.routeName:(context) => const EditProfileScreen(),
      },
-      initialRoute: SplashScreen.routeName,
+      initialRoute: AddPostScreen.routeName,
     );
   }
 }

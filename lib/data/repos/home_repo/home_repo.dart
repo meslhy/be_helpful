@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:be_helpful/data/model/failures.dart';
 import 'package:be_helpful/data/model/home_responses/posts_response.dart';
 import 'package:be_helpful/domain/repos/home_repo/ds/home_online_ds.dart';
@@ -20,6 +22,15 @@ class HomeRepoImpl extends HomeRepo {
   Future<Either<Failuer, PostsResponse>> getAllPosts() async{
     if(await connectivity.isInternetConnective){
       return ds.getAllPosts();
+    }else{
+      return left(Failuer(Constants.internetErrorMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failuer, bool>> createPost(String content, String location, String category, File image)async {
+    if(await connectivity.isInternetConnective){
+      return ds.createPost(content, location, category, image);
     }else{
       return left(Failuer(Constants.internetErrorMessage));
     }

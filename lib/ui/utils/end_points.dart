@@ -8,5 +8,9 @@ abstract class EndPoints {
   static String resetPass = "/api/v1/users/resetPassword";
   static String getAllCategories = "/api/v1/posts/getAllCategories";
   static String profile = "/api/v1/users/me";
+  static String updatePhoto = "/api/v1/users/updateMyPhoto";
+  static String createPost = "/api/v1/posts";
+  static String updateProfile = "/api/v1/users/updateMe";
+  static String getProfileByID = "/api/v1/users/getUserById";
 
 }
